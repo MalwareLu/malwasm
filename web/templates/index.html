@@ -1,0 +1,240 @@
+<!-- index.html   _                             
+  _ __ ___   __ _| |_      ____ _ ___ _ __ ___  
+ | '_ ` _ \ / _` | \ \ /\ / / _` / __| '_ ` _ \ 
+ | | | | | | (_| | |\ V  V / (_| \__ \ | | | | |
+ |_| |_| |_|\__,_|_| \_/\_/ \__,_|___/_| |_| |_|
+-->
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv="cache-control" content="Private" />
+		<link href="static/styles/common.css" type="text/css" rel="stylesheet" />
+		<link href="static/styles/overcast/jquery-ui-1.8.22.custom.css" type="text/css" rel="stylesheet" />
+        <link href="static/styles/jquery.contextMenu.css" type="text/css" rel="stylesheet" />
+        <link href="static/styles/kendo/kendo.common.min.css" rel="stylesheet">
+        <link href="static/styles/kendo/kendo.default.min.css" rel="stylesheet">
+		<script type="text/javascript" src="static/scripts/jquery/jquery.min.js"></script>
+		<script type="text/javascript" src="static/scripts/jquery/jquery-ui-1.8.22.custom.min.js"></script>
+		<script type="text/javascript" src="static/scripts/common.js"></script>
+		<script type="text/javascript" src="static/scripts/malwasm.js"></script>
+		<script type="text/javascript" src="static/scripts/view.js"></script>
+		<script type="text/javascript" src="static/scripts/models.js"></script>
+		<script type="text/javascript" src="static/scripts/utils.js"></script>
+        <script type="text/javascript" src="static/scripts/dump.js"></script>
+        <script type="text/javascript" src="static/scripts/stack.js"></script>
+        <script type="text/javascript" src="static/scripts/jquery/jquery.contextMenu.js"></script>
+        <script type="text/javascript" src="static/scripts/kendo/kendo.web.min.js"></script>
+		<title>Malwasm Web Interface</title>
+	</head>
+	<body>
+        <div class="toolbar"> <!-- Header -->
+            <ul>
+                <li id="open"><div id="open_link"><div class="toolbar_image"></div>Open</div></li>
+                <li class="divider">&nbsp;</li>
+                <li id="start" ><div id="pause_selected_link"><div class="toolbar_image"></div>Start</div></li>
+                <li id="pause" ><div id="pause_selected_link"><div class="toolbar_image"></div>Pause</div></li>
+                <li id="stepin" ><div id="pause_selected_link"><div class="toolbar_image"></div>Step</div></li>
+                <li id="undo" ><div id="pause_selected_link"><div class="toolbar_image"></div>Undo</div></li>
+                <li class="divider">&nbsp;</li>
+                <li class="toolbar_detail_label">
+                    Position:<br/><br/>
+                    Thread:
+                </li>
+                <li>&nbsp;</li>
+                <li id="toolbar_position_thread" class="toolbar_detail_value">
+                                        <form action="javascript:void(0)" style="display: inline;">
+                        <input type="number" size="4" id="position_selected" name="position_selected" />
+                    </form>
+                    /<span id="position_max"></span><br/>
+                                        <form>
+                                                <select id="select_thread">
+                                            </select>
+                                        </form>
+                                </li>
+                <li class="toolbar_detail_label">References</li>
+                <li>&nbsp;</li>
+                <li class="toolbar_detail_value">
+                    <ul id="inspector_ref"></ul>
+                </li>
+                <li class="divider">&nbsp;</li>
+                <li class="toolbar_detail_label">
+                    Id:<br/>
+                    MD5:<br/>
+                    Filename:<br/>
+                    Date:
+                </li>
+                <li>&nbsp;</li>
+                <li class="toolbar_detail_value">
+                    <span id="sample_id"></span><br/>
+                    <span id="sample_hash"></span><br/>
+                    <span id="sample_filename"></span><br/>
+                    <span id="sample_date"></span>
+                </li>
+                <li class="divider">&nbsp;</li>
+                <li class="toolbar_detail_label">
+                    Follow in dump:<br />
+                    <form id="follow_in_dump" action="javascript:void(0)" style="display: inline;">
+                        <input type="text" size="8" id="follow_in_dump_box" name="follow_in_dump" />
+                    </form>
+                </li>
+            </ul>
+        </div>
+
+        <div class="toolbar_details">
+            <div id="slider"></div>
+        </div> <!-- End of header -->
+
+	    <div id="mainSplitter"> <!-- Main -->
+            <div id=leftSplitter>
+                <div id="instruct_container"> <!-- Instruction -->
+                    <ul class="instruct_list" id="instruct_list">
+                        <li style="display: none;"></li>
+                    </ul>
+                </div> <!-- End of instruction -->
+                <div id="dump_container"> <!-- Dump -->
+                    <div id="dump_header" class="inspector_group_label">Dump: 
+                        <select id="dump_select">
+                            <option value="1">stack</option>
+                                        <option selected value="2">data</option>
+                        </select> | Show as:
+                        <select id="dump_group">
+                            <option value="1">BYTE</option>
+                            <option value="2">WORD</option>
+                            <option selected value="4">DWORD</option>
+                        </select> | Number group by line:
+                        <select id="dump_nb_group_line">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option selected value="4">4</option>
+                            <option value="8">8</option>
+                            <option value="16">16</option>
+                            <option value="32">32</option>
+                            <option value="64">64</option>
+                        </select>|
+                        <a href="" id="dump_download">Download</a>
+                        <span id="dump_all"> | <a href="#">Show all</a></span>
+                    </div>
+                    <ul class="stack_list" id="dump_list">
+                    </ul>
+                </div> <!-- End of dump -->
+            </div>
+            <div id="debug_inspector"> <!-- Right part -->
+                <div id="debug_inspector_group">
+                    <div class="inspector_group">
+                        <div class="inspector_group_label">CPU Register</div>
+                        <div class="inspector_row">
+                            <div class="inspector_label">EAX:</div>
+                            <div id="debug_inspector_eax" class="address"></div>
+                        </div>
+                        <div class="inspector_row">
+                            <div class="inspector_label">EBX:</div>
+                            <div id="debug_inspector_ebx" class="address"></div>
+                        </div>
+                        <div class="inspector_row">
+                            <div class="inspector_label">ECX:</div>
+                            <div id="debug_inspector_ecx" class="address"></div>
+                        </div>
+                        <div class="inspector_row">
+                            <div class="inspector_label">EDX:</div>
+                            <div id="debug_inspector_edx" class="address"></div>
+                        </div>
+                        <div class="inspector_row">
+                            <div class="inspector_label">EDI:</div>
+                            <div id="debug_inspector_edi" class="address"></div>
+                        </div>
+                        <div class="inspector_row">
+                            <div class="inspector_label">ESI:</div>
+                            <div id="debug_inspector_esi" class="address"></div>
+                        </div>
+                        <div class="inspector_row">
+                            <div class="inspector_label">EBP:</div>
+                            <div id="debug_inspector_ebp" class="address"></div>
+                        </div>
+                        <div class="inspector_row">
+                            <div class="inspector_label">ESP:</div>
+                            <div id="debug_inspector_esp" class="address"></div>
+                        </div>
+                        <div class="inspector_row">
+                            <div class="inspector_label">EFLAGS:</div>
+                            <div id="debug_inspector_eflags" class="address"></div>
+                        </div>
+                        <div class="inspector_row">
+                            <div class="inspector_label">EIP:</div>
+                            <div id="debug_inspector_eip" class="address"></div>
+                        </div>
+                    </div><!-- class="inspector_group"-->
+                    <div class="inspector_group" id="eflags">
+                        <div class="inspector_group_label">FLAGS:</div>
+                        <div class="inspector_row">
+                            <div class="inspector_label">C:</div>
+                            <div id="debug_inspector_cflag"></div>
+                        </div>
+                        <div class="inspector_row">
+                            <div class="inspector_label">P:</div>
+                            <div id="debug_inspector_pflag"></div>
+                        </div>
+                        <div class="inspector_row">
+                            <div class="inspector_label">A:</div>
+                            <div id="debug_inspector_aflag"></div>
+                        </div>
+                        <div class="inspector_row">
+                            <div class="inspector_label">Z:</div>
+                            <div id="debug_inspector_zflag"></div>
+                        </div>
+                        <div class="inspector_row">
+                            <div class="inspector_label">S:</div>
+                            <div id="debug_inspector_sflag"></div>
+                        </div>
+                        <div class="inspector_row">
+                            <div class="inspector_label">T:</div>
+                            <div id="debug_inspector_tflag"></div>
+                        </div>
+                        <div class="inspector_row">
+                            <div class="inspector_label">D:</div>
+                            <div id="debug_inspector_dflag"></div>
+                        </div>
+                        <div class="inspector_row">
+                            <div class="inspector_label">O:</div>
+                            <div id="debug_inspector_oflag"></div>
+                        </div>
+                    </div>
+                </div> <!-- Endo of register -->
+
+                <div id="stack_container" class="inspector_group">
+                    <div class="inspector_group_label">Stack
+                                    <a href="" id="stack_dump_download">Download</a>
+                                    <span id="stack_all"> | <a href="#">Show all</a></span>
+                    </div>
+                    <ul class="stack_list" id="stack_list">
+                    </ul>
+                </div><!-- End of stack -->
+            </div> <!-- End of right part -->
+        </div> <!-- end of main -->
+
+        <!-- Dialogue sample -->
+        <div id="dialog-samples" title="Samples list" class="ui-widget">
+            <img src="static/images/logo.jpg" style="height:100px;"\>
+            <h1>Existing samples:</h1>
+            <table id="samples" class="ui-widget ui-widget-content">
+                <thead>
+                    <tr class="ui-widget-header ">
+                        <th></th>
+                        <th>id</th>
+                        <th>md5</th>
+                        <th>filename</th>
+                        <th>pin param</th>
+                        <th>insert_at</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div> <!-- End of dialogue samples -->
+        <ul id="menu" class="contextMenu">
+            <li class="follow">
+                <a href="#follow">Follow in dump</a>
+            </li>
+        </ul>
+</body>
+</html>

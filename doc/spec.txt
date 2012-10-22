@@ -1,0 +1,26 @@
+L'outil peut etre divisé en 2 parties distinctes:
+  - le core
+  - le front-end
+
+Le core permet de recuperer toutes les données et le front-end permet de les visualiser.
+
+Core:
+  Le core est base sur le meme fonctionnement que cuckoo. Le binaire a executer est lancé dans virtualbox. La machine guest doit avoir d'installé un agent pour recevoir le binaire, python d'installé et pintool. Le binaire est lancé par pintool afin de recuperer les plus d'information sur son execution et les stocker dans une base de donnée. Voici le workflow:
+  - lancement d'une machine virtuel depuis un snapshot
+  - envoie du binaire a analyser
+  - execution du binaire via pintool
+  - pintool stock dans une db (configurable en fonction des besoins):
+    - les instruction executer les unes apres les autres
+    - les registrers
+    - l'etat de la stack
+    - l'etat de la heap
+  - la machine est restoré dans son etat d'origine.
+
+Front-end
+  Le front-end permet l'exploitation des données mise en db. Il doit permettre de suivre l'execution du binaire après coup. De pouvoir avancer et reculer dans son flux d'execution. De pouvoir generer un graphe d'execution (a voir ce que l'on est capable de faire mais matthieu est pret a nous aider sur ce point). De choisir l'instant qui nous interesse, nombre de fois qu'il a executer cette instruction (dans le cas d'une boucle) etc...
+
+Bilan + TODO
+Le plus complexe m'a l'air clairement le front-end et la taille de la DB (surement partir sur du postgres pour des soucis de perf).
+Pour les graphes de reconnaissance des conditions, boucles etc... C'est la partir mystere pour moi. L'interface utilisateur aussi va falloir reclechir a comment faire pour que je sois exploitable, on a un gros travail de design interface machine/homme ;). Une barre du tps (type barre de defilement) m'a l'air pas mal pour le moment et voir apres pour quelque chose de plus "graphique". Je pense déjà qu'on peut bien bosser sur la partie core.
+
+Mets toutes tes idées ou remarque dans ce document.

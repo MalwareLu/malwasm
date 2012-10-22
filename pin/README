@@ -1,0 +1,19 @@
+WINDOWS PART:
+Update variable PIN_HOME in Nmakefile to match your configuration
+
+To compile in VC shell
+E:\pin>nmake /f Nmakefile
+
+E:\pin>c:\pin-2.11-49306-msvc10-ia32_intel64-windows\pin.bat -t obj-ia32\malwpin.dll -- hello_code\hello_code.exe
+
+------------------------------------------------------------------------------
+LINUX PART:
+
+To compile it you've to change in makefile.gnu.config the variable PIN_HOME
+PIN_HOME = /home/y0ug/tools/pin-2.11-49306-gcc.3.4.6-ia32_intel64-linux/
+
+To force the compilation in 32bits
+HOST_ARCH=ia32 LDFALGS='-m32' make
+
+Run it on linux:
+$ ~/tools/pin-2.11-49306-gcc.3.4.6-ia32_intel64-linux/pin -t obj-ia32/malwpin.so -- hello_code/hello_code

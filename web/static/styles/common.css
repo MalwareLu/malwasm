@@ -1,0 +1,527 @@
+/**
+ * Copyright (C) 2012 Malwasm Developers.
+ * This file is part of Malwasm - https://code.google.com/p/malwasm/
+ * See the file LICENSE for copying permission.
+ * common.css
+ *                  _                             
+ *  _ __ ___   __ _| |_      ____ _ ___ _ __ ___  
+ * | '_ ` _ \ / _` | \ \ /\ / / _` / __| '_ ` _ \ 
+ * | | | | | | (_| | |\ V  V / (_| \__ \ | | | | |
+ * |_| |_| |_|\__,_|_| \_/\_/ \__,_|___/_| |_| |_|
+ *
+ */
+
+
+/*--------------------------------------
+ * GLOBAL
+ *--------------------------------------*/
+
+html {
+	margin: 0;
+	/* setting border: 0 hoses ie6 win window inner well border */
+	padding: 0;
+	height: 100%;
+}
+
+body {
+	color: #222 !important;
+	background: #FFF;
+	text-align: center;
+	margin: 0 0 30px;
+	overflow: hidden;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 11px;
+    line-height: 14px;
+}
+
+img {
+	border: none;
+}
+
+a {
+	outline: 0;
+	-moz-outline: none;
+}
+
+div#mainSplitter, div#leftSplitter, div#debug_inspector {
+    padding: 0px;
+    margin: 0px;
+    overflow: hidden;
+}
+
+div#leftSplitter, div#debug_inspector {
+    display: inline-block;
+}
+
+/*--------------------------------------
+ * TOP MENU
+ *--------------------------------------*/
+
+div.toolbar {
+	width: 100%;
+	height: 75px;
+	margin: 0;
+	background: transparent url('../images/graphics/chrome.png') left top repeat-x;
+	border-bottom: 1px solid #888;
+	overflow: hidden;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+}
+
+div.toolbar h1 {
+	height: inherit;
+	width: 205px;
+	text-indent: -9000px !important;
+	padding: 0;
+	margin: 0 0 0 5px;
+}
+
+div.toolbar ul {
+	height: 50px;
+	margin: 0;
+	padding: 0 7px;
+	text-align: center;
+}
+
+div.toolbar ul li {
+	list-style-type: none;
+	list-style-image: none;
+	float: left;
+	padding: 0;
+	margin: 13px 0 0 0;
+	vertical-align: middle;
+	height: 50px;
+}
+
+div.toolbar ul li > div {
+	color: #000;
+	font-size: 1.1em;
+	text-decoration: none;
+	padding: 0 8px;
+	display: block;
+	margin: 0;
+	text-shadow: 0 1px 0 #ccc;
+	min-width: 32px;
+	cursor: pointer;
+}
+
+div.toolbar ul li div.toolbar_image {
+	width: 32px;
+	height: 32px;
+	margin: 0 auto 5px;
+	background-image: url('../images/buttons/toolbar_buttons.png');
+}
+
+li#open div div.toolbar_image {
+	background-position: left 0;
+}
+
+li#start div div.toolbar_image {
+	background-position: left -32px;;
+}
+
+li#pause div div.toolbar_image {
+	background-position: left -64px;
+}
+
+li#stepin div div.toolbar_image {
+	background-position: left -96px;;
+}
+
+li#undo div div.toolbar_image {
+        background-position: left -128px;
+}
+
+div.toolbar ul li.divider {
+	width: 0;
+	border-right: 1px dotted black;
+	opacity: 0.2;
+	margin: 14px 4px 0;
+	height: 49px;
+}
+
+.toolbar_detail_label{
+	text-align: right;
+	font-weight: bold;
+}
+
+.toolbar_detail_value{
+	text-align: left;
+}
+
+#toolbar_position_thread {
+    width: 120px;
+}
+/*--------------------------------------
+ * INSTRUCTION CONTAINER
+ *--------------------------------------*/
+
+div#instruct_container {
+	padding: 0px;
+	margin: 0px;
+}
+
+ul.instruct_list {
+	width: auto;
+	margin: 0;
+	padding: 0;
+	text-align: left;
+	cursor: default;
+}
+
+ul.instruct_list li {
+	list-style-type: none;
+	list-style-image: none;
+	clear: both;
+	display: block;
+	vertical-align: middle;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	width:auto;
+	margin-left:2px;
+    font-family: "Courier New", Courier, monospace;
+}
+ul.instruct_list li div{
+    line-height: 11px;
+}
+ul.instruct_list li.instruct.selected {
+	background-color: #3879D7;
+	color: #FFF;
+}
+
+ul.instruct_list li.instruct_filename{
+    font-size: 1em;
+    display: inline-block;
+    padding-left: 2px;
+    width:"100%";
+    background-color: #FF6600;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+ul.instruct_list li.instruct_section{
+    font-size: 1em;
+    display: inline-block;
+    padding-left: 6px;
+    width:"100%";
+    background-color: #FFFF66;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+ul.instruct_list li.instruct div.name{
+	font-size: 1em;
+	display: inline-block;
+	border-right: 1px solid #888;
+	padding-right: 8px;
+	width:75px;
+}
+
+ul.instruct_list li.inst_call{
+	border-top: 1px solid red;
+	margin-top: 5px;
+}
+
+ul.instruct_list li.inst_ret{
+	border-bottom: 1px solid red;
+	margin-bottom: 5px;
+}
+
+ul.instruct_list li.instruct div.eip{
+	font-size: 1em;
+	display: inline-block;
+	border-right: 1px solid #888;
+	padding-right: 8px;
+	padding-left: 8px;
+	width:75px;
+}
+
+ul.instruct_list li.instruct div.instruction{
+	font-size: 1em;
+	display: inline-block;
+	padding-left: 8px;
+	border-right: 1px solid #888;
+    width:250px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+ul.instruct_list li.instruct div.comment{
+	font-size: 1em;
+	display: inline-block;
+	padding-left: 8px;
+	font-weight:bold;
+    width: auto;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+/*--------------------------------------
+ * DEBUG INSPECTOR
+ *--------------------------------------*/
+
+div#debug_inspector {
+	width: 250px;
+	background-color: #ddd;
+	border-left: 1px solid #888;
+	text-align: left;
+    padding-left: 3px;
+	overflow-y: hidden;
+    overflow-x: auto;
+											    
+}
+
+.inspector_container {
+	margin: 0 3%;
+	width: 96%;
+}
+.inspector_group {
+	display: table;
+	/*width: 100%;*/
+	/*border-top: 1px solid #888;*/
+	/*margin: 10px 0px;*/
+	padding: 10px 0px;
+}
+.inspector_group_label {
+	display: table-header-group;
+	font-weight: bold;
+}
+.inspector_row {
+	/*display: table-row;*/
+    margin-left: 10px;
+}
+.inspector_row > .inspector_label {
+	display: table-cell;
+	width: 80px; /* this + the next 380 == inspector_container_with */
+	font-family: "Courier New", Courier, monospace;
+}
+.inspector_row > div {
+	display: table-cell;
+	padding-top: 0px;
+	width: 100px; /* inspector_container_width==480 - inspector_label_width==100 */
+	font-family: "Courier New", Courier, monospace;
+}
+
+#eflags .inspector_row > .inspector_label {
+	width:30px;
+}
+
+/*--------------------------------------
+ * GLOBAL DETAILS
+ *--------------------------------------*/
+
+div.toolbar_details {
+	width: 100%;
+	height: 20px;
+	margin: 0px;
+    padding: 2.5px 0px;
+	background: #ddd url('../images/graphics/filter_bar.png') repeat-x left -51px;
+	font-size: 1.1em;
+	font-weight: normal;
+	border-bottom: 1px solid #888;
+	color: #000;
+	text-shadow: 0 1px 0 #f4f4f4;
+}
+
+
+/*--------------------------------------
+ * DEBUG FOOTER
+ *--------------------------------------*/
+
+div.debug_footer {
+	width: 100%;
+	height: 22px;
+	margin: 0;
+	padding: 0;
+	border-top: 1px solid #555;
+	background: #aaa url('../images/graphics/chrome.png') left bottom repeat-x;
+	position: fixed;
+	left: 0px;
+	right: 0px;
+	bottom: 0;
+	color: #000;
+	text-shadow: 0 1px 0 #ccc;
+}
+
+
+/*--------------------------------------
+ * SLIDER STYLE 
+ *--------------------------------------*/
+
+#slider { 
+	margin: 5px !important;
+}
+
+/*--------------------------------------
+ * REFERENCE PANEL
+ *--------------------------------------*/
+#inspector_ref {
+	width: 100px;
+	margin: 0;
+	padding: 0;
+	text-align: left;
+	cursor: default;
+	height: 100%;
+	overflow:auto;
+}
+
+#inspector_ref li {
+	vertical-align: middle;
+    height: 12px;
+    clear: both;
+    display: block;
+	/*-moz-user-select: none;
+	-webkit-user-select: none;*/
+	overflow: hidden;
+	margin: 0px 2px;
+}
+
+
+#inspector_ref li.selected {
+	background-color: #3879D7;
+	color: #FFF;
+}
+
+/*--------------------------------------
+ * SAMPLES DIALOG
+ *--------------------------------------*/
+div#dialog-samples h1 { 
+	font-size: 1.2em; 
+	margin: .6em 0; 
+}
+
+div#dialog-samples { 
+	width: 650px; 
+	margin: 20px 0; 
+    overflow: auto;
+}
+
+div#dialog-samples table { 
+	margin: 1em 0; 
+	border-collapse: collapse; 
+	width: 100%;
+}
+
+div#dialog-samples table td, div#dialog-samples table th { 
+	border: 1px solid #eee; 
+	padding: .6em 10px; 
+	text-align: left; 
+}
+
+/*--------------------------------------
+ * STACK CONTAINER
+ *--------------------------------------*/
+div#stack_container {
+    padding: 0px;
+    margin: 0px;
+    overflow: hidden;
+}
+
+ul.stack_list {
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    width: 244px;
+    overflow-y: scroll;
+    /*cursor: default;*/
+}
+
+ul.stack_list li {
+    list-style-type: none;
+    list-style-image: none;
+    clear: both;
+    display: block;
+    vertical-align: middle;
+    /*-moz-user-select: none;
+    -webkit-user-select: none;*/
+    overflow: hidden;
+    margin-left:2px;
+    width: 600px;
+    font-family: "Courier New", Courier, monospace;
+}
+
+ul.stack_list li.stack.selected {
+    background-color: #3879D7;
+    color: #FFF;
+}
+
+ul.stack_list li.stack div.adr{
+    font-size: 1em;
+    display: inline-block;
+    border-right: 1px solid #888;
+    padding-right: 8px;
+    padding-left: 8px;
+    width:60px;
+}
+
+ul.stack_list li.stack div.value{
+    font-size: 1em;
+    display: inline-block;     
+    border-right: 1px solid #888;   
+    padding-right: 8px;
+    padding-left: 8px;
+    width:60px;
+}
+
+ul.stack_list li.stack div.comment{
+    font-size: 1em;
+    display: inline-block;     
+    /*border-right: 1px solid #888;*/
+    padding-right: 8px;
+    padding-left: 8px;
+    width:60px;
+}
+
+/* --------------------------
+ * DUMP CONTAINER
+   --------------------------*/
+div#dump_container {
+	height: 250px;
+	background-color: #DDDDDD;
+	border-top: 1px solid #888888;
+	overflow: hidden;
+	text-align: left;	
+}
+
+select#dump_select option{
+    font-family: "Courier New", Courier, monospace;
+}
+
+ul#dump_list {
+	width: auto;
+}
+
+ul.stack_list li.dump {
+        list-style-type: none;
+        list-style-image: none;
+        clear: both;
+        display: block;
+        vertical-align: middle;
+        /*-moz-user-select: none;
+        -webkit-user-select: none;*/
+        overflow: hidden;
+        margin-left:2px;
+        width: auto;
+        font-family: "Courier New", Courier, monospace;
+}
+ul.stack_list li.dump div.adr{
+        font-size: 1em;
+        display: inline-block;
+        border-right: 1px solid #888;
+        padding-right: 8px;
+        width:auto;
+}
+
+ul.stack_list li.dump div.value{
+        font-size: 1em;
+        display: inline-block;
+        border-right: 1px solid #888;
+        padding-right: 8px;
+        padding-left: 8px;
+        width:auto;
+}
+
+ul.stack_list li.dump div.comment{
+        font-size: 1em;
+        display: inline-block;
+        /*border-right: 1px solid #888;*/
+        padding-right: 8px;
+        padding-left: 8px;
+        width:auto;
+}
