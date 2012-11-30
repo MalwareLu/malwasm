@@ -1,0 +1,5 @@
+2012-11-30
+	* Rebuild the dll with pintool pin-2.12-53271-msvc10-ia32_intel64-windows
+	* Update README
+	* Switch version to v0.1.1
+

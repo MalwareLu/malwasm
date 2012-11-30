@@ -38,10 +38,10 @@ or
 
 == Pintool ==
 Pintool cannot be put directly inside malwasm due to licence issue. You have to download it by yourself.
-	* http://software.intel.com/sites/landingpage/pintool/downloads/pin-2.12-54730-msvc10-windows.zip
+	* http://software.intel.com/sites/landingpage/pintool/downloads/pin-2.12-53271-msvc10-ia32_intel64-windows.zip
 
 Once downloaded you have to extract all the .dll and .exe files of the subfolder
-	* /pin-2.12-54730-msvc10-windows/ia32/bin/
+	* /pin-2.12-53271-msvc10-windows/ia32/bin/
 to the folder:
 	* malwasm/cuckoo/analyzer/windows/bin
 
