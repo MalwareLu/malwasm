@@ -9,7 +9,6 @@
 # |_| |_| |_|\__,_|_| \_/\_/ \__,_|___/_| |_| |_|
 #
 
-
 import logging
 import argparse, re, sys, os
 import time
@@ -23,7 +22,7 @@ from core.MalwasmConstants import *
 from core.MalwasmConfig import *
 from datetime import date
 
-from lib.cuckoo.common.utils import File
+from lib.cuckoo.common.objects import File
 
 
 def main():
@@ -84,11 +83,9 @@ def main():
         File(r.path).get_md5(), pin_param)
 
     open(os.path.join(share_path, 'sample.xml'), 'w').write(xml_sample)
-
     db = MalwasmCuckooDb()
 
-    task_id = db.add(file_path=r.path,
-                     md5=File(r.path).get_md5(),
+    task_id = db.add(File(r.path),
                      package="malwasm",
                      timeout=r.timeout,
                      options=r.options,
@@ -100,7 +97,7 @@ def main():
     print " [*] Task added with id %d in cuckoo" % task_id
     print " [*] Wait to task finish..."
 
-    while not db.is_complete(task_id):
+    while db.get_status(task_id) != "success":
         time.sleep(1)
 
     print " [*] Task complete"

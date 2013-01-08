@@ -15,18 +15,19 @@ import os
 from core.MalwasmConfig import MalwasmConfig
 cuckoo_path = os.path.expanduser(MalwasmConfig().get('cuckoo')['cuckoo_path'])
 sys.path.append(cuckoo_path)
-from lib.cuckoo.core.database import Database
+
+from sqlalchemy.exc import SQLAlchemyError
+from lib.cuckoo.core.database import Database, Task
 
 class MalwasmCuckooDb(Database):
-    def is_complete(self, task_id):
+    def get_status(self, task_id):
         """Return if a task is finish.
          @param task_id: task id.
          @return: true if a task is complete.
         """
+        session = self.Session()
         try:
-           self.cursor.execute("SELECT status FROM tasks WHERE id = ?;",
-               (task_id,))
-           row = self.cursor.fetchone()
-        except sqlite3.OperationalError as e:
-           return False
-        return row['status'] != 0
+            task = session.query(Task).get(task_id)
+        except SQLAlchemyError:
+            return None
+        return task.status
